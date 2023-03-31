@@ -26,9 +26,9 @@ public class TableViewFStagiaires extends GridPane{
 		colPrenom.setMinWidth(50); 
 		colPrenom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("prenom"));
 		
-		TableColumn<Stagiaire, Integer> colDept= new TableColumn<Stagiaire, Integer>("Département");
+		TableColumn<Stagiaire, String> colDept= new TableColumn<Stagiaire, String>("Département");
 		colDept.setMinWidth(50); 
-		colDept.setCellValueFactory(new PropertyValueFactory<Stagiaire, Integer>("departement"));
+		colDept.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("departement"));
 		
 		TableColumn<Stagiaire,String> colCours= new TableColumn<Stagiaire,String>("Cours");
 		colCours.setMinWidth(50); 

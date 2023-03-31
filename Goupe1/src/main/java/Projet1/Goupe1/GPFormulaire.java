@@ -75,13 +75,13 @@ public class GPFormulaire extends GridPane {
 				Stagiaire stagiaire = new Stagiaire
 						(tfNom.getText(), 
 						tfPrenom.getText(),
-						Integer.parseInt(tfDept.getText()),
+						tfDept.getText(),
 						tfCours.getText(), 
 						Integer.parseInt(tfAnneeFor.getText()));
 				
 				System.out.println(stagiaire +  "taille de la liste " + lesStagiaires.size());
 				lesStagiaires.add(stagiaire);
-//				getForm().setRoot
+
 
 			}
 		});

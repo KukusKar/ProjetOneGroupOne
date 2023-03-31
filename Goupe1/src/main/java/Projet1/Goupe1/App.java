@@ -112,11 +112,13 @@ public class App extends Application {
 		vbox.setPadding(new Insets(80, 20, 40, 20));
 		vbox.setSpacing(30);
 
-		// je crée mes boutons
+		// je crée mes boutons avec leurs actions respectives
 		Button btnImport = new Button("Importer liste");
 		btnImport.setTextFill(Color.WHITE);
 		btnImport.setFont(Font.font("Ink free", 12));
 		btnImport.setStyle("-fx-background-color:darkslategray");
+		
+		//prochainement une action pour le bouton IMPORT
 
 		Button btnAfficher = new Button("Afficher stagiaires");
 		btnAfficher.setStyle("-fx-background-color:lemonchiffon");

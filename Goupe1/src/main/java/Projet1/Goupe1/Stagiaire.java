@@ -4,11 +4,11 @@ public class Stagiaire {
 	
 	public String nom;
 	public String prenom;
-	public int departement;
+	public String departement;
 	public String cours;
 	public int anneeForm;
 	
-	public Stagiaire(String nom, String prenom, int departement, String cours, int anneeForm) {
+	public Stagiaire(String nom, String prenom, String departement, String cours, int anneeForm) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -16,7 +16,7 @@ public class Stagiaire {
 		this.cours = cours;
 		this.anneeForm = anneeForm;
 	}
-	
+		
 	
 	public String getNom() {
 		return nom;
@@ -30,10 +30,10 @@ public class Stagiaire {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	public int getDepartement() {
+	public String getDepartement() {
 		return departement;
 	}
-	public void setDepartement(int departement) {
+	public void setDepartement(String departement) {
 		this.departement = departement;
 	}
 	public String getCours() {
