@@ -1,7 +1,6 @@
 package Projet1.Goupe1;
 
 import java.util.ArrayList;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,10 +26,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 	
-	public ArrayList <Stagiaire> lesStagiaires = new ArrayList<Stagiaire>();
-//	public TableViewFStagiaires tvStagiaires;
-	
-	
+	public ArrayList<Stagiaire> lesStagiaires = new ArrayList<>();
 	// je crée mon BorderPane
 	BorderPane root = new BorderPane();
 	
@@ -75,6 +71,42 @@ public class App extends Application {
 
 	}
 
+	private HBox addHBoxBas() {
+		HBox hboxBas = new HBox();
+		hboxBas.setPadding(new Insets(15, 12, 15, 12));
+		hboxBas.setSpacing(20);
+		hboxBas.setAlignment(Pos.BOTTOM_RIGHT);
+
+		// je crée mes boutons
+//	    Button btnCherche = new Button("Recherche avancé");
+//	    btnCherche.setFont(Font.font("Ink free", 12));
+//	    btnCherche.setStyle("-fx-background-color:lemonchiffon");
+//    	Button btnImpr = new Button("Imprimer");
+//    	btnImpr.setStyle("-fx-background-color:lemonchiffon");
+//    	btnImpr.setFont(Font.font("Ink free", 12));
+//    	
+//    	hboxBas.getChildren().addAll(btnCherche, btnImpr);
+
+		return hboxBas;
+	}
+
+	private HBox addHBoxHaut() {
+		HBox hbox = new HBox();
+		hbox.setPadding(new Insets(15, 12, 15, 12));
+		hbox.setAlignment(Pos.TOP_CENTER);
+		hbox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
+		;
+		Label lblTitre = new Label("AFCEPF  Annuaire des Stagiaires");
+		lblTitre.setTextFill(Color.BLACK);
+		lblTitre.setFont(Font.font("Ink free", FontWeight.BOLD, FontPosture.REGULAR, 20));
+
+		// On ajoute mon Label Titre
+		hbox.getChildren().addAll(lblTitre);
+
+		return hbox;
+	}
+
+
 	private VBox addVBox() throws Exception {
 		VBox vbox = new VBox();
 		vbox.setPadding(new Insets(80, 20, 40, 20));
@@ -109,6 +141,20 @@ public class App extends Application {
 		Button btnAjouter = new Button("Ajouter un stagiaire");
 		btnAjouter.setStyle("-fx-background-color:mintcream");
 		btnAjouter.setFont(Font.font("Ink free", 12));
+		
+		btnAjouter.setOnAction(new EventHandler<ActionEvent>() {
+			
+			public void handle(ActionEvent event) {
+				// j'instancie un nouveau Panneau
+				Pane centerPannel = new Pane();
+				centerPannel.setPrefSize(400, 400);
+				centerPannel.setSnapToPixel(true);
+				GPFormulaire gPane = new GPFormulaire(lesStagiaires);
+				centerPannel.getChildren().add((gPane.getForm()));
+				root.setCenter(centerPannel);
+			}
+		});
+		
 		Button btnSupprimer = new Button("Supprimer un stagiaire");
 		btnSupprimer.setStyle("-fx-background-color:mintcream");
 		btnSupprimer.setFont(Font.font("Ink free", 12));
@@ -121,40 +167,7 @@ public class App extends Application {
 		return vbox;
 	}
 
-	private HBox addHBoxHaut() {
-		HBox hbox = new HBox();
-		hbox.setPadding(new Insets(15, 12, 15, 12));
-		hbox.setAlignment(Pos.TOP_CENTER);
-		hbox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
-		;
-		Label lblTitre = new Label("AFCEPF  Annuaire des Stagiaires");
-		lblTitre.setTextFill(Color.BLACK);
-		lblTitre.setFont(Font.font("Ink free", FontWeight.BOLD, FontPosture.REGULAR, 20));
 
-		// On ajoute mon Label Titre
-		hbox.getChildren().addAll(lblTitre);
-
-		return hbox;
-	}
-
-	private HBox addHBoxBas() {
-		HBox hboxBas = new HBox();
-		hboxBas.setPadding(new Insets(15, 12, 15, 12));
-		hboxBas.setSpacing(20);
-		hboxBas.setAlignment(Pos.BOTTOM_RIGHT);
-
-		// je crée mes boutons
-//	    Button btnCherche = new Button("Recherche avancé");
-//	    btnCherche.setFont(Font.font("Ink free", 12));
-//	    btnCherche.setStyle("-fx-background-color:lemonchiffon");
-//    	Button btnImpr = new Button("Imprimer");
-//    	btnImpr.setStyle("-fx-background-color:lemonchiffon");
-//    	btnImpr.setFont(Font.font("Ink free", 12));
-//    	
-//    	hboxBas.getChildren().addAll(btnCherche, btnImpr);
-
-		return hboxBas;
-	}
 
 	public static void main(String[] args) {
 		launch();

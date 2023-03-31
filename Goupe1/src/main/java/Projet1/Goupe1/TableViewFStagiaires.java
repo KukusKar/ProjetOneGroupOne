@@ -1,8 +1,11 @@
 package Projet1.Goupe1;
 
 import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 
 public class TableViewFStagiaires extends GridPane{
@@ -16,23 +19,28 @@ public class TableViewFStagiaires extends GridPane{
 		
 		//Je rajoute mes colonnes
 		TableColumn<Stagiaire,String> colNom= new TableColumn<Stagiaire,String>("Nom");
-		colNom.setMinWidth(200); 
+		colNom.setMinWidth(50); 
+		colNom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("nom"));
 		
 		TableColumn<Stagiaire,String> colPrenom= new TableColumn<Stagiaire,String>("Prenom");
-		colPrenom.setMinWidth(200); 
+		colPrenom.setMinWidth(50); 
+		colPrenom.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("prenom"));
 		
-		TableColumn<Stagiaire, Integer > colDept= new TableColumn<>("Département");
-		colDept.setMinWidth(200); 
+		TableColumn<Stagiaire, Integer> colDept= new TableColumn<Stagiaire, Integer>("Département");
+		colDept.setMinWidth(50); 
+		colDept.setCellValueFactory(new PropertyValueFactory<Stagiaire, Integer>("departement"));
 		
 		TableColumn<Stagiaire,String> colCours= new TableColumn<Stagiaire,String>("Cours");
-		colCours.setMinWidth(200); 
+		colCours.setMinWidth(50); 
+		colCours.setCellValueFactory(new PropertyValueFactory<Stagiaire, String>("cours"));
 		
 		TableColumn<Stagiaire,Integer> colAnnee= new TableColumn<Stagiaire,Integer>("Année de formation");
-		colAnnee.setMinWidth(200); 
+		colAnnee.setMinWidth(50); 
+		colAnnee.setCellValueFactory(new PropertyValueFactory<Stagiaire, Integer>("anneeForm"));
 		
 		table.getColumns().addAll(colNom, colPrenom, colDept, colCours, colAnnee);
-
-		
+		table.setItems(FXCollections.observableArrayList(lesStagiaires));
+	
 		
 	}
 

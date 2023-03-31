@@ -42,17 +42,17 @@ public class Stagiaire {
 	public void setCours(String cours) {
 		this.cours = cours;
 	}
-	public int getAnneeNaiss() {
+	public int getAnneeForm() {
 		return anneeForm;
 	}
-	public void setAnneeNaiss(int anneeNaiss) {
+	public void setAnneeForm(int anneeNaiss) {
 		this.anneeForm = anneeNaiss;
 	}
 	
 	@Override
 	public String toString() {
 		return "TableViewFStagiaires [Nom= " + nom + "\tPrenom= " + prenom + "\tDepartement= " + departement + "\tCours= "
-				+ cours + "\tAnnée de naissance= " + anneeForm + "]";
+				+ cours + "\tAnnée de formation= " + anneeForm + "]";
 	}
 	
 }
