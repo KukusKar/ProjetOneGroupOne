@@ -1,4 +1,4 @@
-package Projet1.Goupe1;
+package back;
 
 public class SystemInfo {
 

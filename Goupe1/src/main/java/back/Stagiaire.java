@@ -1,4 +1,4 @@
-package Projet1.Goupe1;
+package back;
 
 public class Stagiaire {
 	
@@ -6,10 +6,10 @@ public class Stagiaire {
 	public String prenom;
 	public String departement;
 	public String cours;
-	public int anneeForm;
+	public String anneeForm;
 	
-	public Stagiaire(String nom, String prenom, String departement, String cours, int anneeForm) {
-		super();
+	public Stagiaire(String nom, String prenom, String departement, String cours, String anneeForm) {
+		
 		this.nom = nom;
 		this.prenom = prenom;
 		this.departement = departement;
@@ -42,10 +42,10 @@ public class Stagiaire {
 	public void setCours(String cours) {
 		this.cours = cours;
 	}
-	public int getAnneeForm() {
+	public String getAnneeForm() {
 		return anneeForm;
 	}
-	public void setAnneeForm(int anneeNaiss) {
+	public void setAnneeForm(String anneeNaiss) {
 		this.anneeForm = anneeNaiss;
 	}
 	

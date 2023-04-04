@@ -1,7 +1,8 @@
-package Projet1.Goupe1;
+package front;
 
 import java.util.ArrayList;
 
+import back.Stagiaire;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

@@ -1,6 +1,8 @@
-package Projet1.Goupe1;
+package front;
 
 import java.util.ArrayList;
+
+import back.Stagiaire;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -77,7 +79,7 @@ public class GPFormulaire extends GridPane {
 						tfPrenom.getText(),
 						tfDept.getText(),
 						tfCours.getText(), 
-						Integer.parseInt(tfAnneeFor.getText()));
+						tfAnneeFor.getText());
 				
 				System.out.println(stagiaire +  "taille de la liste " + lesStagiaires.size());
 				lesStagiaires.add(stagiaire);

@@ -1,6 +1,8 @@
-package Projet1.Goupe1;
+package front;
 
 import java.util.ArrayList;
+
+import back.Stagiaire;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
