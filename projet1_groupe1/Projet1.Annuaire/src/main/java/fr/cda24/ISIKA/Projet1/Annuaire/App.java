@@ -15,38 +15,45 @@ import javafx.stage.Stage;
 /**
  * JavaFX App
  */
-
+/**
+ * Cette classe représente l'application principale.
+ */
 public class App extends Application {
+	// Indique si le fichier de dons a été chargé ou non
+	private static boolean donFileLoaded = false;
+	// Arbre binaire utilisé pour stocker les données des utilisateurs
+	private BinaryTree binaryTree = new BinaryTree<>();
 
-//	private Class<?> originPage;
-	 private static boolean donFileLoaded = false;
-	    private BinaryTree binaryTree = new BinaryTree<>();
-
+	/**
+     * Cette méthode est appelée au démarrage de l'application.
+     * Elle crée l'instance de la page de connexion, désactive le redimensionnement
+     * de la fenêtre et définit la page de connexion comme scène principale.
+     * 
+     * @param stage la fenêtre principale de l'application
+     * @throws Exception si une exception est levée pendant l'exécution de la méthode
+     */
 	@Override
 	public void start(Stage stage) throws Exception {
-		//binaryTree = new BinaryTree<>();
-		
-		// Chargement du fichier binaire
-//        if (binaryTree == null) {
-//            binaryTree = new BinaryTree();
-//        }
-		// Création d'un nouvel objet TableViewStagiaires
-		
-//		ListEmployee listEmployee = new ListEmployee();
-		LoginPage loginPage = new LoginPage(binaryTree); // Création de l'instance de LoginPage
-		//AddStagPage addStagPage = new AddStagPage();
-//		AddEmployee addEmploye = new AddEmployee(null);
-		//MainPage mainPage = new MainPage(null, null, null, binaryTree);
-		// Désactiver le redimensionnement de la fenêtre
-        stage.setResizable(false);
-        
-        
 
-        Scene scene = loginPage.getMyScene();
-		stage.setScene(scene); // Définition de la scène comme scène principale de la fenêtre
+        // Création de l'instance de la page de connexion en lui passant l'arbre binaire
+		LoginPage loginPage = new LoginPage(binaryTree); 
+
+		// Désactiver le redimensionnement de la fenêtre
+		stage.setResizable(false);
+
+        // Obtenir la scène de la page de connexion
+		Scene scene = loginPage.getMyScene();
+        // Définition de la scène comme scène principale de la fenêtre
+		stage.setScene(scene); 
+        // Afficher la fenêtre
 		stage.show();
 	}
-
+	/**
+     * Cette méthode est appelée au lancement de l'application.
+     * Elle appelle la méthode launch() de la classe Application pour démarrer l'application.
+     * 
+     * @param args les arguments passés en ligne de commande
+     */
 	public static void main(String[] args) {
 		launch();
 	}

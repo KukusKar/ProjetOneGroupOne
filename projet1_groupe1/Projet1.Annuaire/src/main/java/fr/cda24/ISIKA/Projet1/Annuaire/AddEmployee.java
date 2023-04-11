@@ -39,23 +39,43 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 
+
+/**
+ * Cette classe permet la création d'un nouvel employé dans l'application. Elle étend la classe VBox et contient plusieurs éléments graphiques pour saisir les informations de l'employé.
+ * 
+ * @param <T> le type de la page d'origine
+ */
 public class AddEmployee<T> extends VBox {
 
-	// Variable pour enregistrer la page d'origine
-//    private Class<?> originPage;
+
     
+	// Variable pour enregistrer la page d'origine
+    private T originPage;
+
+    // Variables pour stocker l'adresse email et le mot de passe de l'utilisateur connecté
 	private String email;
 	private String password;
-    private T originPage;
+
+	// Variables pour valider le format de l'adresse email
 	private Pattern pattern;
 	private Matcher matcher;
 	private final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+	// Instance de BinaryTree pour stocker les données des employés
 	private BinaryTree arbre;
 	
-	
+	/**
+	 * Constructeur de la classe AddEmployee.
+	 * 
+	 * @param email l'adresse email de l'utilisateur connecté
+	 * @param password le mot de passe de l'utilisateur connecté
+	 * @param originPage la page d'origine à partir de laquelle l'utilisateur a accédé à cette page
+	 * @param arbre l'instance de l'objet BinaryTree pour stocker les données des employés
+	 */
 	public AddEmployee(String email, String password, T originPage, BinaryTree <?> arbre) {
 		
+		// Initialisation des variables d'instance
 		this.email = email;
 	    this.password = password;
         this.originPage = originPage;
@@ -63,7 +83,6 @@ public class AddEmployee<T> extends VBox {
 
 
 		
-//		this.originPage = originPage;
 		Session session = Session.getInstance();
 		if (session.getLoggedInUser() != null) {
 		    this.email = session.getLoggedInUser().getEmail();
@@ -78,13 +97,13 @@ public class AddEmployee<T> extends VBox {
 		
 		//Création de la HBox du titre
 				HBox hbTitle = new HBox();
-				Label lblTitle = new Label("Création d'un nouvel employé");
-				lblTitle.setStyle("-fx-font-family:Roboto; -fx-padding: 10px ;-fx-border-color: lightgray; -fx-border-width: 1px; -fx-border-radius:10px");
+				Button lblTitle = new Button("Création d'un nouvel employé");
+		        lblTitle.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 20px; -fx-font-family: Roboto; -fx-padding: 10px 20px; -fx-background-radius: 15px; -fx-border-radius: 15px;");
 				hbTitle.getChildren().add(lblTitle);
 				hbTitle.setAlignment(Pos.CENTER);
 				
 				
-				//Création des labels et des textFields, RadioButton, datepicker etc
+				// Labels et champs de texte pour saisir les informations de l'employé
 				Label lblLastName = new Label("Entrez le nom : ");
 				TextField tfLastName = new TextField();
 				tfLastName.setStyle("-fx-prompt-text-fill: gray;");
@@ -100,14 +119,8 @@ public class AddEmployee<T> extends VBox {
 				//Création d'un datePicker
 				Label lblBirthDate = new Label("Date de naissance : ");
 				DatePicker dpEmployeeBirthDate = new DatePicker();
-				dpEmployeeBirthDate.setStyle("-fx-background-radius: 15; -fx-border-radius: 15; -fx-control-inner-border-radius: 15;");
-//				dpEmployeeBirthDate.setStyle(
-//		                "-fx-background-radius: 15;" +
-//		                "-fx-background-color: -fx-box-border, -fx-inner-border, -fx-background;" +
-//		                "-fx-background-insets: 0, 1, 2;" +
-//		                "-fx-text-fill: -fx-text-inner-color;" +
-//		                "-fx-padding: 0.333333em 0.583333em 0.333333em 0.583333em;"
-//		        );
+//				dpEmployeeBirthDate.setStyle("-fx-background-radius: 15; -fx-border-radius: 15; -fx-control-inner-border-radius: 15;");
+
 				
 				//Création d'un label et d'un choiceBox pour le choix du cycle
 				Label lblAdmin = new Label("Est-ce un administrateur ? ");
@@ -117,7 +130,7 @@ public class AddEmployee<T> extends VBox {
 				ToggleGroup grpAdmin = new ToggleGroup();
 				grpAdmin.getToggles().addAll(rbAdminO, rbAdminN);
 				
-				
+				//Création d'un label et d'un texfield pour l'adresse mail de l'employé
 				Label lblMail = new Label("Entrez l'adresse mail de connexion : ");
 				TextField tfMail = new TextField();
 				tfMail.setStyle("-fx-prompt-text-fill: gray;");
@@ -155,11 +168,12 @@ public class AddEmployee<T> extends VBox {
 				HBox hbSuccess = new HBox();
 				Button btnAdd = new Button("Créer");
 				Button btnBack = new Button("Retour");
-				Label lblSuccess = new Label("Employee ajouté avec succès !");
-				lblSuccess.setTextFill(Color.GREEN);
-				lblSuccess.setVisible(false);
+				Label lblSuccessError = new Label("");
+				lblSuccessError.setVisible(false);
 				
+				//Ajout d'un gestionnaire d'événements lorsque le bouton btnAdd est pressé
 				btnAdd.setOnAction(e -> {
+				    // Récupération des données saisies par l'utilisateur
 				    String firstName = tfFirstName.getText();
 				    String lastName = tfLastName.getText();
 				    LocalDate birthDate = dpEmployeeBirthDate.getValue();
@@ -167,53 +181,49 @@ public class AddEmployee<T> extends VBox {
 				    String newPassword = pwEmployee.getText();
 				    boolean isAdmin = grpAdmin.getSelectedToggle() == rbAdminO;
 
-				    // Création d'un nouvel employé
-//				    Employee employee = new Employee(firstName, lastName, birthDate, email, password, isAdmin);
-//				    Employee.addEmployee(employee);
-				    
-				    Employee employee = Employee.findEmployee(email);
-
-				    if (employee == null) {
-				        // L'employé n'existe pas encore, nous en créons un nouveau
-				        employee = new Employee(firstName, lastName, birthDate, newEmail, newPassword, isAdmin);
-				        Employee.addEmployee(employee);
-				    } else {
-				        // L'employé existe déjà, nous mettons simplement à jour les informations
-				        employee.setFirstName(firstName);
-				        employee.setLastName(lastName);
-				        employee.setBirthDate(birthDate);
-				        employee.setPassword(newPassword);
-				        employee.setAdmin(isAdmin);
-				    }
-				    
-				    
-				    String newNewEmail = "nouvel.email@entreprise.com";
-				    boolean emailExists = false;
-				    
-				        if (employee.getEmail().equals(newNewEmail)) {
-				            emailExists = true;
-				            
-				        }
-				    
-				    if (emailExists) {
-				        // Le nouvel email existe déjà dans la liste des employés
-				    	System.out.println("Le nouvel email existe déja dans la liste");
-				    } else {
-				        // Le nouvel email n'existe pas encore dans la liste des employés
-				    	System.out.println("Le nouvel email n'existe pas encore dans la liste");
-
+				    // Vérifier que tous les champs sont remplis
+				    if (firstName.isEmpty() || lastName.isEmpty() || birthDate == null || newEmail.isEmpty() || newPassword.isEmpty()) {
+				        //Affichage d'un message d'erreur si des champs sont vides
+				    	lblSuccessError.setText("Veuillez remplir tous les champs.");
+				    	lblSuccessError.setTextFill(Color.RED);
+				        lblSuccessError.setVisible(true);
+				        return;
 				    }
 
-				    lblSuccess.setVisible(true);
+				    //Vérification de l'existance de l'employee
+				    Employee existingEmployee = Employee.findEmployee(newEmail);
+				    if (existingEmployee != null) {
+				        //S'il existe, on met à jour ses infos
+				        existingEmployee.setFirstName(firstName);
+				        existingEmployee.setLastName(lastName);
+				        existingEmployee.setBirthDate(birthDate);
+				        existingEmployee.setPassword(newPassword);
+				        existingEmployee.setAdmin(isAdmin);
+				        System.out.println("Les informations de l'employé(e) ont été mises à jour !");
+				    } else {
+				        //S'il n'existe pas,on crée un nouvel employé
+				        Employee newEmployee = new Employee(firstName, lastName, birthDate, newEmail, newPassword, isAdmin);
+				        Employee.addEmployee(newEmployee);
+				        System.out.println("Nouvel(le) employé(e) créé(e)");
+				    }
 
+				    //Affichage d'un message de réussite si l'ajout est réussi
+				    lblSuccessError.setText("Employé(e) ajouté(e) avec succès !");
+				    lblSuccessError.setTextFill(Color.GREEN);
+				    lblSuccessError.setVisible(true);
 				});
-				
+				//Ajout d'un gestionnaire d'événements lorsque le bouton btnBack est pressé
 				btnBack.setOnAction(e -> {
 
-			            MainPage<T> mainPage = new MainPage<T>(email, password, originPage, arbre);
-			            Scene sceneMainPage = mainPage.getMyScene();
-			            Stage stage = (Stage) btnBack.getScene().getWindow();
-			            stage.setScene(sceneMainPage);
+//			            MainPage<T> mainPage = new MainPage<T>(email, password, originPage, arbre);
+//			            Scene sceneMainPage = mainPage.getMyScene();
+//			            Stage stage = (Stage) btnBack.getScene().getWindow();
+//			            stage.setScene(sceneMainPage);
+				    //Retour à la page précédente
+					ListEmployee listEmployee = new ListEmployee(email, password, originPage, arbre);
+					Scene listEmployeeScene = listEmployee.getMyScene();
+					Stage stage = (Stage) btnBack.getScene().getWindow();
+					stage.setScene(listEmployeeScene);
 					
 			    });
 				//On créer les ombres qui apparaitrons sous les boutons
@@ -222,71 +232,69 @@ public class AddEmployee<T> extends VBox {
 		        shadow.setOffsetX(0);
 		        shadow.setOffsetY(5);
 		        shadow.setColor(Color.color(0, 0, 0, 0.2));
+		      //Application de styles pour les boutons et ajout des ombres
 		        btnAdd.setStyle("-fx-background-color: white; -fx-background-radius: 15px;");
 		        btnBack.setStyle("-fx-background-color: white; -fx-background-radius: 15px;");
 		        btnAdd.setEffect(shadow);
 		        btnBack.setEffect(shadow);
+		        lblTitle.setEffect(shadow);
 
-				
+
+		      //Ajout des boutons dans une HBox
 				hbAddBack.getChildren().addAll(btnAdd, btnBack);
 				hbAddBack.setAlignment(Pos.CENTER);
 				hbAddBack.setSpacing(30);
 				
-				hbSuccess.getChildren().add(lblSuccess);
+				hbSuccess.getChildren().add(lblSuccessError);
 				hbSuccess.setAlignment(Pos.CENTER);
 
+				// Création d'une nouvelle HBox pour le logo
 				HBox hbLilLogo = new HBox();
 				try {
-				Image image = new Image(new FileInputStream(
-						"src/main/java/annexe/logo_a-removebg.png"));
-				// Redimensionner l'image
-				double newWidth = 70;
-				double newHeight = 70;
-				ImageView imageView = new ImageView(image);
-				imageView.setPreserveRatio(true);
-				imageView.setFitWidth(newWidth);
-				imageView.setFitHeight(newHeight);
-				image = imageView.snapshot(null, null);
-				
+				    Image image = new Image(new FileInputStream("src/main/java/annexe/logo_a-removebg.png")); // Chargement de l'image depuis le fichier
+				    double newWidth = 70; // Définition de la nouvelle largeur
+				    double newHeight = 70; // Définition de la nouvelle hauteur
+				    ImageView imageView = new ImageView(image); // Création d'un objet ImageView pour l'image
+				    imageView.setPreserveRatio(true); // Paramétrage pour préserver le ratio de l'image
+				    imageView.setFitWidth(newWidth); // Redimensionnement de la largeur de l'image
+				    imageView.setFitHeight(newHeight); // Redimensionnement de la hauteur de l'image
+				    image = imageView.snapshot(null, null); // Création d'une snapshot pour l'image redimensionnée
 
-				// Ajouter l'ImageView à la HBox du logo
-				hbLilLogo.getChildren().add(imageView);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-				
-				//On centre le contenue de HboxLilLogo 
-				hbLilLogo.setAlignment(Pos.CENTER);
-				
-				//On intégre tout dans le this et on le stylise
-				this.getChildren().addAll(hbTitle, gridPane, hbAddBack, hbSuccess,  hbLilLogo);
-				
+				    hbLilLogo.getChildren().add(imageView); // Ajout de l'objet ImageView à la HBox pour le logo
+				} catch (FileNotFoundException e) {
+				    e.printStackTrace(); // Gestion de l'exception FileNotFoundException en affichant la stack trace
+				}
+
+				hbLilLogo.setAlignment(Pos.CENTER); // Centrage du contenu de la HBox du logo
+
+				this.getChildren().addAll(hbTitle, gridPane, hbAddBack, hbSuccess, hbLilLogo); // Ajout des éléments à la VBox de la AddPage				
 		        
 
 				
-				VBox.setMargin(hbTitle, new Insets(70, 0, 20, 0));
-				VBox.setMargin(gridPane, new Insets(20, 0, 20, 0));
-				VBox.setMargin(hbAddBack, new Insets(50, 0, 0, 0));
-				VBox.setMargin(hbLilLogo, new Insets(20, 0, 0, 0));
-				VBox.setMargin(hbSuccess, new Insets(40, 0, 0, 0));
+				VBox.setMargin(hbTitle, new Insets(70, 0, 20, 0)); // Définition de la marge pour le titre
+				VBox.setMargin(gridPane, new Insets(20, 0, 20, 0)); // Définition de la marge pour le formulaire
+				VBox.setMargin(hbAddBack, new Insets(50, 0, 0, 0)); // Définition de la marge pour les boutons de navigation
+				VBox.setMargin(hbLilLogo, new Insets(20, 0, 0, 0)); // Définition de la marge pour le logo
+				VBox.setMargin(hbSuccess, new Insets(40, 0, 0, 0)); // Définition de la marge pour le message de succès
+
 				
 				// Création du dégradé de couleur verticale de Aliceblue à White
-			    Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(0.2, Color.WHITE), new Stop(1, Color.ALICEBLUE) };
+			    Stop[] stops = new Stop[] { new Stop(0, Color.WHITE), new Stop(0.6, Color.ALICEBLUE), new Stop(1, Color.LIGHTSKYBLUE) };
 			    LinearGradient gradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, stops);
 			    
 			    // Application du dégradé à l'arrière-plan de la AddPage
 			    this.setBackground(new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY)));
 			    
 			    
-			    tfMail.textProperty().addListener((observable, oldValue, newValue) -> {
-					if (newValue != null && !newValue.isEmpty()) {
-						if (!validateEmailFormat(newValue)) {
-							tfMail.setStyle("-fx-border-color: red;");
-						} else {
-							tfMail.setStyle(null);
-						}
-					}
-				});
+			    tfMail.textProperty().addListener((observable, oldValue, newValue) -> { // Ajout d'un listener sur le champ de l'adresse email pour valider le format de l'adresse
+			        if (newValue != null && !newValue.isEmpty()) {
+			            if (!validateEmailFormat(newValue)) {
+			                tfMail.setStyle("-fx-border-color: red;"); // Changement du style en cas d'adresse invalide
+			            } else {
+			                tfMail.setStyle(null); // Retour au style par défaut en cas d'adresse valide
+			            }
+			        }
+			    });
 			    
 			    
 				
@@ -298,7 +306,6 @@ public class AddEmployee<T> extends VBox {
 	 * Création de la méthode private validateEmailFormat
 	 *
 	 * @param email
-	 * 
 	 */
 	private boolean validateEmailFormat(String email) {
 		// On crée un Pattern en utilisant l'expression régulière EMAIL_PATTERN
@@ -317,6 +324,10 @@ public class AddEmployee<T> extends VBox {
 	public Scene getMyScene() {
 		return new Scene(this, 425, 620);
 	}
+	
+	public T getOriginPage() {
+        return originPage;
+    }
 	
 	
 }

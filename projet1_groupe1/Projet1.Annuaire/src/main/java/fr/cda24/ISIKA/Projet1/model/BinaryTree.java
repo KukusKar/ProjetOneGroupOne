@@ -8,16 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Classe représentant un arbre binaire de recherche générique avec des éléments qui implémentent Comparable
+ * @param <E> type des éléments de l'arbre binaire qui implémentent Comparable
+ */
 public class BinaryTree<E extends Comparable<E>> {
 
 	private Noeud racine;
 	private RandomAccessFile raf;
 	private List<Stagiaire> stagiaires; // variable de classe pour stocker les données lues depuis le fichier binaire
 
-	public Noeud getRacine() {
-		return racine;
-	}
 
+	/**
+     * Initialise un nouvel arbre binaire avec une racine nulle.
+     * Charge les données des stagiaires à partir du fichier binaire "src/main/java/fichier/stagiaires.bin".
+     * Si le fichier est vide, il est initialisé avec les données du fichier "src/main/java/annexe/STAGIAIRES.DON".
+     */
 	public BinaryTree() {
 		this.racine = new Noeud(null);
 		try {
@@ -58,6 +64,12 @@ public class BinaryTree<E extends Comparable<E>> {
 		}
 	}
 
+	/**
+     * Effectue un parcours infixe de l'arbre binaire et retourne une liste des stagiaires triée.
+     *
+     * @return une liste des stagiaires triée par ordre croissant
+     * @throws IOException si une erreur d'entrée/sortie se produit lors de la lecture du fichier binaire
+     */
 	public ArrayList<Stagiaire> parcoursInfixe() throws IOException {
 		ArrayList<Stagiaire> liste = new ArrayList<>();
 		if (raf.length() == 0) {
@@ -70,15 +82,28 @@ public class BinaryTree<E extends Comparable<E>> {
 		return liste;
 	}
 
+	/**
+     * Renvoie la liste des stagiaires stockés dans l'arbre binaire.
+     *
+     * @return la liste des stagiaires stockés dans l'arbre binaire
+     */
 	public List<Stagiaire> getStagiaires() {
 		return stagiaires;
 	}
-
+	/**
+     * Définit la liste des stagiaires lus depuis le fichier binaire.
+     *
+     * @param stagiaires la liste des stagiaires lus depuis le fichier binaire.
+     */
 	public void setStagiaires(List<Stagiaire> stagiaires) {
 		this.stagiaires = stagiaires;
 	}
 
-	// méthod insert pour ajouter des noeuds à l'arbre
+	/**
+     * Insère un nouveau noeud dans l'arbre binaire contenant le stagiaire donné en paramètre.
+     *
+     * @param stagiaire le stagiaire à insérer dans l'arbre binaire.
+     */
 	public void insertNoeud(Stagiaire stagiaire) {
 
 		try {
@@ -106,22 +131,42 @@ public class BinaryTree<E extends Comparable<E>> {
 		}
 
 	}
-
+	/**
+     * Retourne le flux d'accès aléatoire associé au fichier binaire contenant les données des stagiaires.
+     *
+     * @return le flux d'accès aléatoire associé au fichier binaire contenant les données des stagiaires.
+     */
 	public RandomAccessFile getRaf() {
 		return raf;
 	}
 
+	/**
+     * Définit le flux d'accès aléatoire associé au fichier binaire contenant les données des stagiaires.
+     *
+     * @param raf le flux d'accès aléatoire associé au fichier binaire contenant les données des stagiaires.
+     */
 	public void setRaf(RandomAccessFile raf) {
 		this.raf = raf;
 	}
 
+	/**
+     * Renvoie la racine de l'arbre binaire.
+     *
+     * @return la racine de l'arbre binaire
+     */
+	public Noeud getRacine() {
+		return racine;
+	}
+	/**
+	 * 
+	 *	Renvoie la racine de l'arbre binaire.	
+	 *
+	 *  @param racine de l'arbre binaire
+	 */
 	public void setRacine(Noeud racine) {
 		this.racine = racine;
 	}
 
-	// On initialise la méthode en prennant la racine et appelant la méthode
-	// recursive
-	// Méthode d'initialisation pour le parcours infixe
-
 }
+
 
